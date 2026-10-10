@@ -1,5 +1,5 @@
 import { 
-  ApiError, Book, Category, Loan, LoanItem, Member, 
+  ApiError, Book, Category, LibrarianUser, Loan, LoanItem, Member, 
   MostBorrowedReport, OverdueItem, PaginatedResponse, UserSession 
 } from '../types';
 
@@ -109,10 +109,20 @@ class ApiService {
   }
 
   // Users (Admin only)
+  async getLibrarians(): Promise<{ items: LibrarianUser[] }> {
+    return this.request('/users');
+  }
+
   async createLibrarian(username: string, password: string): Promise<{ id: string; username: string; role: string }> {
     return this.request('/users', {
       method: 'POST',
       body: JSON.stringify({ username, password, role: 'librarian' }),
+    });
+  }
+
+  async deleteLibrarian(id: string): Promise<void> {
+    return this.request(`/users/${id}`, {
+      method: 'DELETE',
     });
   }
 
@@ -160,8 +170,13 @@ class ApiService {
   async uploadCover(id: string, file: File): Promise<void> {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('_method', 'PUT');
+
     return this.request(`/books/${id}/cover`, {
-      method: 'PUT',
+      method: 'POST',
+      headers: {
+        'X-HTTP-Method-Override': 'PUT',
+      },
       body: formData,
     });
   }

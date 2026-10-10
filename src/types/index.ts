@@ -34,9 +34,21 @@ export interface LoanItem {
 export interface Loan {
   id: string;
   member_id: string;
+  member_name?: string;
+  member?: {
+    id: string;
+    full_name: string;
+    document_number: string;
+  };
   loaned_at: string;
   status: 'open' | 'overdue' | 'closed';
   items: LoanItem[];
+}
+
+export interface LibrarianUser {
+  id: string;
+  username: string;
+  role: string;
 }
 
 export interface OverdueItem {

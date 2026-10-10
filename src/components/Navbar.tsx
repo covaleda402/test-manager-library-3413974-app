@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Users, Clock, AlertTriangle, BarChart3, LogOut, UserPlus, Shield } from 'lucide-react';
+import { BookOpen, Users, Clock, AlertTriangle, BarChart3, LogOut, Shield } from 'lucide-react';
 import { UserSession } from '../types';
 
 interface NavbarProps {
@@ -102,11 +102,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             {session.role === 'admin' && (
               <button
                 onClick={onOpenNewLibrarian}
-                className="hidden sm:flex items-center space-x-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-2.5 py-1.5 rounded border border-slate-700 transition"
-                title="Dar de alta bibliotecario"
+                className="hidden sm:flex items-center space-x-1.5 bg-indigo-950/60 hover:bg-indigo-900 text-indigo-200 text-xs px-3 py-1.5 rounded-lg border border-indigo-700/50 transition shadow-xs"
+                title="Gestión de bibliotecarios"
               >
-                <UserPlus className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Nuevo Bibliotecario</span>
+                <Users className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Bibliotecarios</span>
               </button>
             )}
 

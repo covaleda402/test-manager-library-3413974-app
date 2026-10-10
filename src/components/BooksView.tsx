@@ -297,7 +297,7 @@ export const BooksView: React.FC<BooksViewProps> = ({ session }) => {
               <div className="h-44 bg-slate-100 relative flex items-center justify-center overflow-hidden border-b border-slate-100">
                 {b.cover_key ? (
                   <img
-                    src={api.getCoverUrl(b.id)}
+                    src={`${api.getCoverUrl(b.id)}?v=${encodeURIComponent(b.cover_key || '')}`}
                     alt={b.title}
                     className="h-full w-full object-cover"
                   />

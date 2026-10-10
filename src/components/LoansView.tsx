@@ -283,6 +283,7 @@ export const LoansView: React.FC = () => {
               <thead className="bg-slate-50 text-xs uppercase font-semibold text-slate-500 border-b border-slate-200">
                 <tr>
                   <th className="px-6 py-3.5">Fecha de Préstamo</th>
+                  <th className="px-6 py-3.5">Socio Solicitante</th>
                   <th className="px-6 py-3.5">Libros Incluidos</th>
                   <th className="px-6 py-3.5 text-center">Estado Calculado</th>
                   <th className="px-6 py-3.5 text-right">Acción</th>
@@ -295,6 +296,14 @@ export const LoansView: React.FC = () => {
                       <div>{new Date(loan.loaned_at).toLocaleDateString()}</div>
                       <div className="text-xs text-slate-400">
                         {new Date(loan.loaned_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="font-semibold text-slate-800">
+                        {loan.member?.full_name || loan.member_name || members.find((m) => m.id === loan.member_id)?.full_name || 'Socio'}
+                      </div>
+                      <div className="text-xs text-slate-400 font-mono">
+                        Doc: {loan.member?.document_number || members.find((m) => m.id === loan.member_id)?.document_number || loan.member_id.substring(0, 8)}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -504,6 +513,23 @@ export const LoansView: React.FC = () => {
             </div>
 
             <div className="p-6 space-y-4">
+              {/* Socio card */}
+              <div className="bg-indigo-50/70 p-3.5 rounded-xl border border-indigo-100 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-bold text-indigo-700 uppercase tracking-wider block">Socio Asignado</span>
+                  <span className="text-sm font-bold text-slate-900 block">
+                    {selectedLoan.member?.full_name || selectedLoan.member_name || members.find((m) => m.id === selectedLoan.member_id)?.full_name || 'Socio'}
+                  </span>
+                  <span className="text-xs text-slate-600 block mt-0.5">
+                    Documento: <strong className="font-mono text-slate-700">{selectedLoan.member?.document_number || members.find((m) => m.id === selectedLoan.member_id)?.document_number || selectedLoan.member_id}</strong>
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] font-semibold text-slate-400 uppercase block">Total Libros</span>
+                  <span className="text-sm font-bold text-indigo-700">{selectedLoan.items.length} ejemplar(es)</span>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200">
                 <span className="text-xs text-slate-500 font-medium">Estado General:</span>
                 {getStatusBadge(selectedLoan.status)}
